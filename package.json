@@ -1,0 +1,17 @@
+{
+  "name": "slack-bot-bp",
+  "version": "0.0.01",
+  "description": "Slack Bot boilerplate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcoppola/slack-bot-bp"
+  },
+  "author": "Matthew Coppola",
+  "license": "BSD",
+  "dependencies": {
+    "slack-client": "x",
+    "request": "x",
+    "lodash": "x",
+    "async": "x"
+  }
+}
