@@ -12,6 +12,8 @@
     "slack-client": "x",
     "request": "x",
     "lodash": "x",
-    "async": "x"
+    "async": "x",
+    "mongojs": "x",
+    "prettiest": "x"
   }
 }

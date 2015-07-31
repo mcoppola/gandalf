@@ -8,9 +8,12 @@ util.parseCommandFromMessage = function(text, modId, trigger) {
 	var cmd;
 
 	if (text.indexOf(trigger) >= 0 ) {
-		cmd = text.indexOf(trigger) == 0 ? text.split(trigger, + ' ').pop() : text.split(' ' +trigger)[0]
+		cmd = text.indexOf(trigger) == 0 ? text.split(trigger + ' ').pop() : text.split(' ' +trigger)[0]
 	} else if (text.indexOf(modId) >= 0) {
 		cmd = text.indexOf(modId) == 0 ? text.split(': ').pop() : text.split(' ' + modId)[0];
+		console.log('cmd: ', cmd);
+		if (cmd === text) { cmd = text.split(modId + ' ').pop(); }
+		console.log('cmd: ', cmd);
 	}
 
 	return cmd;
