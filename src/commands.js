@@ -12,6 +12,7 @@ module.exports = {
 			'end game': ' <title> _End an existing game and pick a winner if it was completed._',
 			'leave game': ' <title> _Leave an existing game._',
 			'set avatar': ' <emoji> _Set an emoji for your avatar._',
+			'avatar': ' _Show your avatar._',
 			'list games': ' _Lists all current games._'
 		};
 
@@ -34,5 +35,8 @@ module.exports = {
 	},
 	"set avatar": function(bot, command) {
 		bot.setAvatar(command);
+	},
+	"avatar": function(bot, command) {
+		bot.showAvatar(command);
 	}
 };

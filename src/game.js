@@ -39,7 +39,12 @@ Game.prototype.printStatus = function() {
 
 function formatTime(s) {
 	if (s === undefined) {return ''; }
-	return s.toString().replace( /\D+/g, '');
+	if (s.indexOf('00') > -1 ) {
+		s = s.slice(0, s.indexOf('00')) + s.slice(s.indexOf('00') + 2, s.length);
+	}
+	s = s.toString().replace( /\D+/g, '');
+
+	return s;
 }
 
 module.exports = Game;

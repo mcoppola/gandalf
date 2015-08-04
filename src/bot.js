@@ -15,7 +15,7 @@ function Bot () {
 	var self = this;
 
 	self.botId = '<@U088CKCEQ>';        // slack bot id - get from a ping 
-	self.trigger = 'bot';               // alternate command trigger to @<bot_name>
+	self.trigger = 'moon';               // alternate command trigger to @<bot_name>
 	self.slackChannel = 'test';
 
 	self.currentGames = [];
@@ -31,7 +31,7 @@ function Bot () {
 // ------------------------------------------------------ //
 
 Bot.prototype.command = function(options) {
-	var self = this;
+	var self = this
 	var command = new cmd(options);
 
 	if (commands[command.trigger]) {
@@ -51,6 +51,7 @@ Bot.prototype.listen = function() {
 
 	slack.on('message', function(message) {
 
+
 		var type = message.type,
 		    channel = slack.getChannelGroupOrDMByID(message.channel),
 		    user = slack.getUserByID(message.user),
@@ -58,13 +59,18 @@ Bot.prototype.listen = function() {
 		    time = message.ts,
 		    text = message.text || '';
 
-		// Pinged?		
-		if (type === 'message' && channel.name !== 'engine-room' && ((text.indexOf(self.botId) >= 0) || (text.indexOf(self.trigger) >= 0))) {
 
-			// set to current channel
-			self.slackChannel = channel;
+		// Engine room? don't respond
+		if (channel.id !== 'C0258NDNK') {
 
-			self.command({message: util.parseCommandFromMessage(text, self.botId, self.trigger), user: user.name, channel: channel});
+			// Pinged?		
+			if (type === 'message' && channel.name !== 'engine-room' && ((text.indexOf(self.botId) >= 0) || (text.indexOf(self.trigger) >= 0))) {
+
+				// set to current channel
+				self.slackChannel = channel;
+
+				self.command({message: util.parseCommandFromMessage(text, self.botId, self.trigger), user: user.name, channel: channel});
+			}
 		}
 
 	});
@@ -85,7 +91,7 @@ Bot.prototype.say = function(message, channel) {
 Bot.prototype.help = function(sourceCmd, helpText) {
 	var self = this;
 
-	self.say('*COMMANDS:*', sourceCmd.channel);
+	// self.say('-- _use "bot" or @bot and these commands', sourceCmd.channel);
 	var list = _.keys(commands);
 	for (var i = list.length - 1; i >= 0; i--) {
 		self.say("*" + list[i] + "*" + (helpText[list[i]] || ''), sourceCmd.channel);
@@ -132,7 +138,6 @@ Bot.prototype.joinGame = function(sourceCmd) {
 	var self = this;
 
 	// join and existing game
-
 	// args = [ title ]
 
 	var title = sourceCmd.args[0],
@@ -267,6 +272,27 @@ Bot.prototype.setAvatar = function(sourceCmd) {
 
 	self.say('Avatar set!', sourceCmd.channel);
 
+};
+
+Bot.prototype.showAvatar = function(sourceCmd) {
+	var self = this;
+
+	self.db.collection('players').find({ title: sourceCmd.user }, function(err, results){
+		if (err) console.log('err', err);
+
+		var avatar;
+
+		if (results.length) {
+			avatar = results[0].avatar;
+		}
+
+		if (avatar.length) {
+			self.say(avatar + sourceCmd.user, sourceCmd.channel);
+		} else {
+			self.say('No avatar set.  Use *set avatar* <emoji> to set it.', sourceCmd.channel);
+		}
+
+	});
 };
 
 

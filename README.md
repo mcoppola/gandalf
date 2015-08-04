@@ -1,16 +1,1 @@
-data : {
-	"users": {
-	 	"accountName": {
-			"avatar": "<string>",
-			"gamesPlayed": "int",
-			"gamesWon": "int"
-	 	}
-	},
-	"games": {
-		"gameTitle" : {
-
-		}
-	},
-
-
-}
+# Slackbot for P'unk #board-games
